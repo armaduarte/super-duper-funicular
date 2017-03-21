@@ -1,8 +1,6 @@
-# super-duper-funicular
+# Steps to reproduce the results.
 
-## Steps to reproduce the results.
-
-### Installing the Salt Master and Minion servers.
+## Installing the Salt Master and Minion servers.
 
 1. Start a Ubuntu Linux 14.04.5 x64 Server instance and login using the username **root** and the private key sent in the e-mail. The key password has been sent in that e-mail too. The credentials (keys) setup must be done in the instance provider´s admin panel.
 
@@ -68,9 +66,9 @@ Rejected Keys:
 13. Do a small test the check if master and minion processes are working properly. The results of the following command should return a **True**:<br>
 `sudo salt '*' test.ping`
 
-### Applying the states.
+## Applying the states.
 
-#### The logger.sh script.
+### The logger.sh script.
 
 1. Clone this repository in the server. For this steps we will use the home diretory at */root*:<br>
 `git clone https://github.com/armaduarte/super-duper-funicular.git`<br>
@@ -105,7 +103,7 @@ Total states run:     3
 7. The report will be placed at **/root/counts.log** and each line will looks like this one:<br>
 `DATETIME: Mon Mar 20 23:06:13 UTC 2017 | FILENAME: /var/log/upstart/mountall.log | NUMBER OF LINES: 2`
 
-#### Using users-formula to grant access to three users using SSH keys.
+### Using users-formula to grant access to three users using SSH keys.
 
 1. Back to the repository folder, copy the pillar files **top.sls** and **users.sls** to the */srv/pillar* folder.<br>
 `cd /root/super-duper-funicular; cp top.sls /srv/pillar; cp users.sls /srv/pillar`
@@ -161,4 +159,32 @@ Total states run:     24
 userb:x:1000:1000:User B,,,:/home/userb:/bin/bash
 userc:x:1001:1001:User C,,,:/home/userc:/bin/bash
 usera:x:1002:1002:User A,,,:/home/usera:/bin/bash
+```
+
+11. Now try using one of these three username (**usera, userb or userc**) and the key file and password that was sent in the e-mail and you should be able to login:<br>
+```
+Using username "usera".
+Authenticating with public key "imported-openssh-key"
+Passphrase for key "imported-openssh-key":
+Welcome to Ubuntu 14.04.5 LTS (GNU/Linux 4.4.0-66-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com/
+
+  System information as of Tue Mar 21 01:06:21 UTC 2017
+
+  System load:  0.07              Processes:           121
+  Usage of /:   7.4% of 19.56GB   Users logged in:     1
+  Memory usage: 45%               IP address for eth0: 138.197.78.65
+  Swap usage:   0%
+
+  Graph this data and manage this system at:
+    https://landscape.canonical.com/
+
+New release '16.04.2 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+Your Hardware Enablement Stack (HWE) is supported until April 2019.
+
+Last login: Tue Mar 21 01:05:11 2017 from 187.95.126.4
+usera@mfserver:~$
 ```
