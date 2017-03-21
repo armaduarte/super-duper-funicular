@@ -2,7 +2,7 @@
 
 ## Installing the Salt Master and Minion servers.
 
-1. Start a Ubuntu Linux 14.04.5 x64 Server instance and login using the username **root** and the private key sent in the e-mail. The key password has been sent in that e-mail too. The credentials (keys) setup must be done in the instance provider´s admin panel.
+1. Login to the Ubuntu Linux 14.04.5 x64 Server instance using the username **root**, private key and key password sent in the e-mail.
 
 2. Once logged, add the SaltStack PPA repository:<br>
 `sudo add-apt-repository ppa:saltstack/salt`<br>
@@ -12,10 +12,10 @@ It will ask you to confirm adding a new repository, press *ENTER* to confirm.
 `sudo aptitude update; sudo aptitude safe-upgrade -y`
 
 4. Install SaltStack packages (including master and minion packages):<br>
-`sudo apt-get install salt-master salt-minion salt-ssh salt-cloud salt-doc -y`
+`sudo apt-get install salt-master salt-minion salt-ssh salt-cloud salt-doc git -y`
 
 5. Create SaltStack directories structures:<br>
-`sudo mkdir -p /srv/{salt,pillar}`<br>
+`sudo mkdir -p /srv/{salt,pillar,formulas}`<br>
 
 6. Modify the Salt Master configuration file (`sudo vim /etc/salt/master`) by changing the location of the configuration management instructions (*file_roots*) to point to the new location that was created in the step 5. The *file_roots* directive should looks like this:<br>
 ```
@@ -23,6 +23,7 @@ file_roots:
    base:
      - /srv/salt
      - /srv/formulas
+     - /srv/formulas/users-formula
 ```
 
 7. Continue modifying the Salt Master configuration but this time we will change the location of the Salt pillar configuration (*pillar_roots*) to point to the new location also created in the step 5. The *pillar_roots* directive should looks like this:<br>
@@ -122,28 +123,16 @@ root@mfserver:/srv/pillar# salt '*' pillar.items | grep User
                 User B
                 User C
 ```
-
-4. Create a folder to hold the formulas in our server:<br>
-`mkdir -p /srv/formulas`
-
-5. We need to get the **users-formula** to use together with our pillar files. Let´s clone the github repository at the location */srv/formulas*:<br>
+4. We need to get the **users-formula** formula so we can use together with our pillar files to create the users. Let´s clone the github repository at the location */srv/formulas*:<br>
 `cd /srv/formulas; git clone https://github.com/saltstack-formulas/users-formula.git`
 
-6. Edit the Salt Master configuration file and add the new folder that the cloned users-formula repository created to the Master can see it. The *file_roots* directive now should looks like this:<br>
-```
-file_roots:
-   base:
-     - /srv/salt
-     - /srv/formulas
-     - /srv/formulas/users-formula
-```
-7. Restart both Salt Master and Minion services in order to apply the modifications.<br>
+5. Restart both Salt Master and Minion services in order to apply the modifications.<br>
 `service salt-master restart; service salt-minion restart`
 
-8. Now let´s create the users running the following command:<br>
+6. Now let´s create the users running the following command:<br>
 `salt '*' state.sls users`
 
-9. If everything went ok, you should see the following output:<br>
+7. If everything went ok, you should see the following output:<br>
 ```
 Summary
 -------------
@@ -153,7 +142,7 @@ Failed:     0
 Total states run:     24
 ```
 
-10. Doing another check using **getent** we can see the brand new three users created:<br>
+8. Doing another check using **getent** we can see the brand new three users created:<br>
 `getent passwd`<br>
 ```
 userb:x:1000:1000:User B,,,:/home/userb:/bin/bash
@@ -161,7 +150,7 @@ userc:x:1001:1001:User C,,,:/home/userc:/bin/bash
 usera:x:1002:1002:User A,,,:/home/usera:/bin/bash
 ```
 
-11. Now try using one of these three username (**usera, userb or userc**) and the key file and password that was sent in the e-mail and you should be able to login:<br>
+9. Now try using one of these three username (**usera, userb or userc**) and the key file and password that was sent in the e-mail and you should be able to login:<br>
 ```
 Using username "usera".
 Authenticating with public key "imported-openssh-key"
