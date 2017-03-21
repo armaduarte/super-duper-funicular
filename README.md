@@ -77,7 +77,7 @@ Rejected Keys:
 `cd super-duper-funicular; cp logger.sls /srv/salt`
 
 3. Run the state so it can download the **logger.sh** script and setup the crontab.<br>
-`state '*' state.sls logger`<br>
+`salt '*' state.sls logger`<br>
 
 4. If you see this ouput below everything worked fine:<br>
 ```
