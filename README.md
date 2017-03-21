@@ -137,6 +137,7 @@ Failed:     0
 -------------
 Total states run:     24
 ```
+**PS: If this doesn´t work in the first, you receive a `Minion did not return. [No response]` message, just try again and it should work. Restarting both Master and Minion processes can help too.**
 
 8. Doing another check using **getent** we can see the brand new three users created:<br>
 `getent passwd`<br>
