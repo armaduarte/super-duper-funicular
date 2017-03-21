@@ -173,3 +173,4 @@ Your Hardware Enablement Stack (HWE) is supported until April 2019.
 Last login: Tue Mar 21 01:05:11 2017 from 187.95.126.4
 usera@mfserver:~$
 ```
+*PS: These users don´t have sudo access.*
