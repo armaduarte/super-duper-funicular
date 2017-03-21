@@ -44,9 +44,8 @@ master: 127.0.0.1
 `service salt-master restart; service salt-minion restart`
 
 10. Verify both Salt Master and Minion connection fingerprint in order to accept the keys so they can start "talking" to each other:<br>
-`sudo salt-call key.finger --local`<br>
-`sudo salt-key -f saltmaster`<br>
-*PS: The server´s hostname is **mfserver**.*<br>
+`sudo salt-call key.finger --local; sudo salt-key -f mfserver`<br>
+*PS: The server´s hostname for these steps is **mfserver**.*<br>
 
 11. Both commands should give the same connection fingerprint, for these steps, the output was:<br>
 `d7:1d:7f:93:17:f6:67:1d:e0:f9:5e:69:bf:c9:08:96`<br>
