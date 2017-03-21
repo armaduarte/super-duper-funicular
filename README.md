@@ -71,7 +71,7 @@ Rejected Keys:
 ### The logger.sh script.
 
 1. Clone this repository in the server. For this steps we will use the home diretory at */root*:<br>
-`git clone https://github.com/armaduarte/super-duper-funicular.git`<br>
+`cd /root; git clone https://github.com/armaduarte/super-duper-funicular.git`<br>
 
 2. Change to the repository directory created after the cloning:<br>
 `cd super-duper-funicular`
