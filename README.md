@@ -73,16 +73,13 @@ Rejected Keys:
 1. Clone this repository in the server. For this steps we will use the home diretory at */root*:<br>
 `cd /root; git clone https://github.com/armaduarte/super-duper-funicular.git`<br>
 
-2. Change to the repository directory created after the cloning:<br>
-`cd super-duper-funicular`
+2. Change to the repository directory created after the cloning and copy the file **logger.sls** to */srv/salt/*:<br>
+`cd super-duper-funicular; cp logger.sls /srv/salt`
 
-3. Copy the file **logger.sls** to */srv/salt/*:
-`cp logger.sls /srv/salt`
-
-4. Run the state so it can download the **logger.sh** script and setup the crontab.<br>
+3. Run the state so it can download the **logger.sh** script and setup the crontab.<br>
 `state '*' state.sls logger`<br>
 
-5. If you see this ouput below everything worked fine:<br>
+4. If you see this ouput below everything worked fine:<br>
 ```
 Summary
 ------------
@@ -92,7 +89,7 @@ Failed:    0
 Total states run:     3
 ```
 
-6. The **logger.sh** script will be located at /opt/logger and the cron will execute it from there each 30 minutes. Check the crontab:<br>
+5. The **logger.sh** script will be located at /opt/logger and the cron will execute it from there each 30 minutes. Check the crontab:<br>
 `crontab -e`<br>
 ```
 # Lines below here are managed by Salt, do not edit
@@ -100,7 +97,7 @@ Total states run:     3
 */30 * * * * /opt/logger/logger.sh
 ```
 
-7. The report will be placed at **/root/counts.log** and each line will looks like this one:<br>
+6. The report will be placed at **/root/counts.log** and each line will looks like this one:<br>
 `DATETIME: Mon Mar 20 23:06:13 UTC 2017 | FILENAME: /var/log/upstart/mountall.log | NUMBER OF LINES: 2`
 
 ### Using users-formula to grant access to three users using SSH keys.
